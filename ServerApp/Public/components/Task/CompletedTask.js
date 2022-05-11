@@ -11,16 +11,8 @@ export default {
         <div v-if="!loading" class="table">
             <el-table :data="list.slice((currentPage-1)*pagesize, currentPage*pagesize)" stripe stype="width: 100%">
                 <el-table-column prop="id" label="序号" width="200%"></el-table-column>
-                <el-table-column prop="record" label="文件" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="size" label="大小"></el-table-column>
-                
-                <el-table-column label="状态">
-                    <template slot-scope="scope">
-                        {{scope.row.state == "HANDED" ? "传输完成" : "传输完成，但状态未知"}}
-                    </template>
-                </el-table-column>
-                
-                <el-table-column prop="created_at" label="创建时间"></el-table-column>
+                <el-table-column prop="info" label="任务信息" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="state" label="状态"></el-table-column>
                 <el-table-column prop="updated_at" label="完成时间"></el-table-column>
             </el-table>
             <el-pagination
@@ -69,8 +61,7 @@ export default {
             // tableHeader存放的是表头的内容
             // label:表头单元格内容  key:表头对应的字段名
             tableHeader: [
-                { label: '文件', key: 'record' },
-                { label: '大小', key: 'size' },
+                { label: '任务信息', key: 'info' },
                 { label: '状态', key: 'state' },
                 { label: '创建时间', key: 'created_at' },
                 { label: '完成时间', key: 'updated_at' }

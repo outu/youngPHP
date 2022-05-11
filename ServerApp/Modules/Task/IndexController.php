@@ -51,6 +51,19 @@ class IndexController extends BaseController
     }
 
 
+    public function getCompletedTask ($pagesize, $currentPage)
+    {
+        $arrRunningTask = (new ToolTask())->getCompletedTask();
+        $nRunningTaskCount = (new ToolTask())->getCompletedTaskCount();
+
+        foreach ($arrRunningTask as $key => $arrTaskInfo) {
+            $arrRunningTask[$key]['state'] = $this->taskStateMap($arrTaskInfo['state']);
+        }
+
+        return $this->success(['list' => $arrRunningTask, 'count' => $nRunningTaskCount]);
+    }
+
+
     public function getCompletedTransList($pagesize, $currentPage)
     {
         $arrFinishedTransList = (new TransList())->getCompletedTransList($pagesize, $currentPage);

@@ -47,4 +47,20 @@ class ToolTask extends BaseModel
             ->where('state', '<>', 'TASK_FINISHED')
             ->count();
     }
+
+
+    public function getCompletedTask()
+    {
+        return $this->M()
+            ->where('state', 'TASK_FINISHED')
+            ->get();
+    }
+
+
+    public function getCompletedTaskCount()
+    {
+        return $this->M()
+            ->where('state', 'TASK_FINISHED')
+            ->count();
+    }
 }
