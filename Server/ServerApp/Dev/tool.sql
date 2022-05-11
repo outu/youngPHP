@@ -16,3 +16,16 @@ CREATE TABLE `tool_task` (
     ENGINE=InnoDB
     COMMENT '界面添加的需要复制的文件任务表'
 ;
+
+DROP TABLE IF EXISTS `tool_good`;
+CREATE TABLE `tool_good` (
+                             `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID值，主键自增',
+                             `name` CHAR(50) NOT NULL DEFAULT '' COMMENT '商品名',
+                             `total` INT(11) NOT NULL DEFAULT 0 COMMENT '商品数量',
+                             `size` INT(11) NOT NULL DEFAULT 0  COMMENT '商品价格'
+                             PRIMARY KEY (`id`)
+)
+    COLLATE='utf8_unicode_ci'
+    ENGINE=InnoDB
+    COMMENT '商品列表'
+;

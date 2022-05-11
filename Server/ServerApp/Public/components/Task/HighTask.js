@@ -1,27 +1,22 @@
-import {API_CREATE_HIGH_TASK} from "../../public/api.js";
+import {API_CREATE_HIGH_TASK, API_GET_HIGH_TASK} from "../../public/api.js";
 
 
 export default {
-    name: 'App',
+    name: 'NewTask',
     template: `
-    <div class="build build-linux-client build-body">
+     <div class="build build-linux-client build-body">
         <div v-if="!!loading" class="loading">
             <img src="../../public/css/image/loading.gif" class="img-loading">
         </div>
         <div v-if="!loading" class="table">
             <el-table :data="list.slice((currentPage-1)*pagesize, currentPage*pagesize)" stripe stype="width: 100%">
                 <el-table-column prop="id" label="序号" width="200%"></el-table-column>
-                <el-table-column prop="record" label="文件" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="size" label="大小"></el-table-column>
-                
-                <el-table-column label="状态">
-                    <template slot-scope="scope">
-                        {{scope.row.state == "WAITING" ? "等待传输" : (scope.row.state == "HANDING" ? "传输中" : "离线")}}
-                    </template>
+                <el-table-column prop="name" label="商品名" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="size" label="价格"></el-table-column>
+                <el-table-column prop="total" label="数量"></el-table-column>
+                <el-table-column label="操作">
+                    <button type="button" class="btn btn-primary" v-on:click="newTask">buy</button>
                 </el-table-column>
-                
-                <el-table-column prop="process" label="传输进度"></el-table-column>
-              
             </el-table>
             <el-pagination
                 @size-change="handleSizeChange"
@@ -69,19 +64,16 @@ export default {
             // tableHeader存放的是表头的内容
             // label:表头单元格内容  key:表头对应的字段名
             tableHeader: [
-                { label: '文件', key: 'record' },
-                { label: '大小', key: 'size' },
-                { label: '状态', key: 'state' },
-                { label: '传输进度', key: 'process' }
+                { label: '商品名', key: 'name' },
+                { label: '价格', key: 'size' },
+                { label: '数量', key: 'total' },
             ],
             buildButtonDisabled: false,
             loading: true,
-
         }
     },
     mounted(){
-        //暂时处理为一次性获取所有的数据，若海量数据则分步获取，即通过传值当前页数获取对应页数的数据
-        API_CREATE_HIGH_TASK({
+        API_GET_HIGH_TASK({
             pagesize: this.pagesize,
             currentPage: this.currentPage,
         })
@@ -100,6 +92,25 @@ export default {
             });
     },
     methods: {
+        newTask: function () {
+            this.buildButtonDisabled = true;
+            API_CREATE_HIGH_TASK({
+                sSourceDir: this.sourceDir,
+                sTargetDir: this.targetDir,
+            })
+                .then((response) => {
+                    console.log("THEN_1", response);
+                    this.message = response.data.data + " task has been added this time";
+                    $('#exampleModalCenter').modal();
+                    this.buildButtonDisabled = false;
+                })
+                .catch((error) => {
+                    console.log("CATCH_1", error);
+                    this.message = error;
+                    $('#exampleModalCenter').modal();
+                    this.buildButtonDisabled = false;
+                });
+        },
         handleSizeChange: function (size) {
             this.pagesize = size;
         },
@@ -107,4 +118,5 @@ export default {
             this.currentPage = currentPage;
         }
     }
+
 };

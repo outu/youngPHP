@@ -64,24 +64,6 @@ class IndexController extends BaseController
     }
 
 
-    public function getCompletedTransList($pagesize, $currentPage)
-    {
-        $arrFinishedTransList = (new TransList())->getCompletedTransList($pagesize, $currentPage);
-        $nFinishedTransList   = (new TransList())->getCompletedTransListCount();
-
-        return $this->success(['list' => $arrFinishedTransList, 'count' => $nFinishedTransList]);
-    }
-
-
-    public function getInCompleteTransList($pagesize, $currentPage)
-    {
-        $arrFinishedTransList = (new TransList())->getInCompleteTransList($pagesize, $currentPage);
-        $nFinishedTransList   = (new TransList())->getInCompleteTransListCount();
-
-        return $this->success(['list' => $arrFinishedTransList, 'count' => $nFinishedTransList]);
-    }
-
-
     public function taskStateMap($sTaskSate)
     {
         return $this->m_sTaskStateMap[$sTaskSate];

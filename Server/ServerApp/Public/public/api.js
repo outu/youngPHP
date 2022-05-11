@@ -39,6 +39,10 @@ export const API_CREATE_HIGH_TASK = (arrExtraParameters) => {
     return apiRequest('Task', 'Index', 'createHighTask', arrExtraParameters)
 }
 
+export const API_GET_HIGH_TASK = (arrExtraParameters) => {
+    return apiRequest('Task', 'Good', 'getGood', arrExtraParameters)
+}
+
 export const API_GET_RUNNING_TASK = (arrExtraParameters) => {
     return apiRequest('Task', 'Index', 'getRunningTask', arrExtraParameters)
 }
