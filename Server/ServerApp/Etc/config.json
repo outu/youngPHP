@@ -14,6 +14,11 @@
     "sqlite": {
       "type": "sqlite",
       "file": "/home/capsheaf.db3"
+    },
+    "redis": {
+      "type": "redis",
+      "server": "10.10.10.5",
+      "port": "6379"
     }
   },
   "debug": "true"

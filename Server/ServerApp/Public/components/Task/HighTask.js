@@ -15,7 +15,10 @@ export default {
                 <el-table-column prop="size" label="价格"></el-table-column>
                 <el-table-column prop="total" label="数量"></el-table-column>
                 <el-table-column label="操作">
-                    <button type="button" class="btn btn-primary" v-on:click="newTask">buy</button>
+                    <template slot-scope="scope">
+                        <button type="button" class="btn btn-primary" v-on:click="newTask(scope.row.id)">buy</button>
+                    </template>
+             
                 </el-table-column>
             </el-table>
             <el-pagination
@@ -43,7 +46,7 @@ export default {
                 </button>
               </div>
               <div class="modal-body">
-                {{message}}}
+                {{message}}
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -92,15 +95,18 @@ export default {
             });
     },
     methods: {
-        newTask: function () {
+        newTask: function (nGoodId) {
             this.buildButtonDisabled = true;
             API_CREATE_HIGH_TASK({
-                sSourceDir: this.sourceDir,
-                sTargetDir: this.targetDir,
+                nGoodId:nGoodId
             })
                 .then((response) => {
-                    console.log("THEN_1", response);
-                    this.message = response.data.data + " task has been added this time";
+
+                    if (response.data.code === 200){
+                        this.message = 'checkout success.';
+                    } else {
+                        this.message = 'The goods are sold out';
+                    }
                     $('#exampleModalCenter').modal();
                     this.buildButtonDisabled = false;
                 })

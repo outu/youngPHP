@@ -29,3 +29,16 @@ CREATE TABLE `tool_good` (
     ENGINE=InnoDB
     COMMENT '商品列表'
 ;
+
+DROP TABLE IF EXISTS `tool_order`;
+CREATE TABLE `tool_order` (
+                             `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID值，主键自增',
+                             `good_id` CHAR(50) NOT NULL DEFAULT '' COMMENT '商品id',
+                             `pay` INT(1) NOT NULL DEFAULT 0 COMMENT '是否付款',
+                             `created_at` DATETIME NULL COMMENT '下单时间',
+                                 PRIMARY KEY (`id`)
+)
+    COLLATE='utf8_unicode_ci'
+    ENGINE=InnoDB
+    COMMENT '订单'
+;
